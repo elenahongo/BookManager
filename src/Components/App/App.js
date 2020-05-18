@@ -5,7 +5,7 @@ import FilterBar from '../FilterBar/FilterBar';
 import SearchResults from '../SearchResults/SearchResults';
 import CreateList from '../CreateList/CreateList';
 import BookManager from '../../util/BookManager'
-import Pagination from '../Pagination/Pagination'
+import PaginationLinks from '../Pagination/Pagination'
 
 const App = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -68,7 +68,7 @@ const App = () => {
           onEdit={onEditBook}
           onDelete={onDeleteBook}
         />
-        <Pagination 
+        <PaginationLinks 
           booksPerPage={booksPerPage} 
           totalBooks={searchResults.length}
           paginate={paginate}
