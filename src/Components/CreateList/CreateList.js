@@ -18,7 +18,6 @@ class CreateList extends Component {
 
   onDrop= (ev, cat) => {
     let id = ev.dataTransfer.getData('id');
-    console.log(id)
     this.props.onAddBook(id);
   }
 

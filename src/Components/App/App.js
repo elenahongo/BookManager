@@ -6,6 +6,7 @@ import SearchResults from '../SearchResults/SearchResults';
 import CreateList from '../CreateList/CreateList';
 import BookManager from '../../util/BookManager'
 import PaginationLinks from '../Pagination/Pagination'
+import ListOfLists from '../ListOfLists/ListOfLists'
 
 const App = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -13,12 +14,25 @@ const App = () => {
     const [booksPerPage] = useState(5);
     const [listName, setListName] = useState('New List Name');
     const [listBooks, setListBooks] = useState([]);
+    const [listOfLists, setlistOfLists] = useState([]);
 
  const onCreateBook = (book) => {
     BookManager.createBook(book).then(book => {
       let updateSearch = searchResults.slice();
       updateSearch.unshift(book)
       setSearchResults(updateSearch);
+    });
+  }
+ 
+  const onCreateList = () => {
+    let booksToList = listBooks.map(element => {
+      return element.id
+    })
+    console.log(booksToList)
+    BookManager.createList(listName, booksToList.join(',')).then(list => {
+      let updateLists = listOfLists.slice();
+      updateLists.unshift(list.title)
+      setlistOfLists(updateLists);
     });
   }
 
@@ -31,10 +45,27 @@ const App = () => {
     })
   };
 
+  const onDeleteList = (id) => {
+    BookManager.deleteList(id).then(()=>{
+      let updateListofLists = listOfLists.filter(listListed => {
+        return listListed.id !== id;
+      });
+        setlistOfLists(updateListofLists)
+    })
+  };
+
   const getBooks = () => {
     BookManager.getBooks().then(books => {
       if (books.length) {
         setSearchResults(books);
+      }
+    });
+  }
+ 
+  const getLists = () => {
+    BookManager.getLists().then(lists => {
+      if (lists.length) {
+        setlistOfLists(lists);
       }
     });
   }
@@ -45,6 +76,7 @@ const App = () => {
 
   useEffect(() => {
     getBooks()
+    getLists()
   }, []);
     
   //Pagination logic
@@ -71,12 +103,16 @@ const App = () => {
       searchResults.map(book => {
         if (book.id===Number(id)){
           if(updateList){
-          updateList.push(book)    
+          updateList.unshift(book)    
           }
         }
       })
       setListBooks(updateList)
     }
+  }
+
+  const updateListName = (name) => {
+    setListName(name);
   }
 
     return (
@@ -96,8 +132,16 @@ const App = () => {
           paginate={paginate}
         />
         <CreateList
+          listName={listName}
+          onNameChange={updateListName}
+          onCreateList={onCreateList}
           createListBooks={listBooks}
           onAddBook={onAddBook}
+          onSave={onCreateList}
+        />
+        <ListOfLists
+          lists={listOfLists}
+          onDelete={onDeleteList}
         />
 
           {/* <div>

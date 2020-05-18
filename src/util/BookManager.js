@@ -13,6 +13,18 @@ BookManager.getBooks = () => {
   });
 };
 
+BookManager.getLists = () => {
+  const url = `${baseUrl}/lists`;
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      return new Promise(resolve => resolve([]));
+    }
+    return response.json().then(jsonResponse => {
+      return jsonResponse.lists;
+    });
+  });
+};
+
 
 // BookManager.getEmployee = id => {
 //   const url = `${baseUrl}/employees/${id}`;
@@ -45,6 +57,26 @@ BookManager.createBook = book => {
   });
 };
 
+BookManager.createList = (title, books) => {
+  const url = `${baseUrl}/lists`;
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({title: title,
+                          books: books})
+  };
+  return fetch(url, fetchOptions).then(response => {
+    if (!response.ok) {
+      return new Promise(resolve => resolve(null));
+    }
+    return response.json().then(jsonResponse => {
+      return jsonResponse.list;
+    });
+  });
+};
+
 // BookManager.updateEmployee = employee => {
 //   const url = `${baseUrl}/employees/${employee.id}`;
 //   const fetchOptions = {
@@ -66,6 +98,14 @@ BookManager.createBook = book => {
 
 BookManager.deleteBook = id => {
   const url = `${baseUrl}/books/${id}`;
+  const fetchOptions = {
+    method: 'DELETE'
+  };
+  return fetch(url, fetchOptions);
+};
+
+BookManager.deleteList = id => {
+  const url = `${baseUrl}/lists/${id}`;
   const fetchOptions = {
     method: 'DELETE'
   };
@@ -143,24 +183,7 @@ BookManager.deleteBook = id => {
 //   });
 // };
 
-// BookManager.createMenuItem = (menuItem, menuId) => {
-//   const url = `${baseUrl}/menus/${menuId}/menu-items`;
-//   const fetchOptions = {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({menuItem: menuItem})
-//   };
-//   return fetch(url, fetchOptions).then(response => {
-//     if (!response.ok) {
-//       return new Promise(resolve => resolve(null));
-//     }
-//     return response.json().then(jsonResponse => {
-//       return camelcaseKeys(jsonResponse.menuItem);
-//     });
-//   });
-// };
+
 
 // BookManager.updateMenuItem = (menuItem, menuId) => {
 //   const url = `${baseUrl}/menus/${menuId}/menu-items/${menuItem.id}`;
