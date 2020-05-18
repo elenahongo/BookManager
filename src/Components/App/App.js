@@ -15,6 +15,7 @@ const App = () => {
     const [listName, setListName] = useState('New List Name');
     const [listBooks, setListBooks] = useState([]);
     const [listOfLists, setlistOfLists] = useState([]);
+    const [tagsList, setTagsList] = useState([]);
 
  const onCreateBook = (book) => {
     BookManager.createBook(book).then(book => {
@@ -23,7 +24,22 @@ const App = () => {
       setSearchResults(updateSearch);
     });
   }
- 
+  
+  const addTag = (books) => {
+    let updateTags = tagsList.slice()
+    let tags = books.map(element=>{
+      return element.tags
+    });
+    tags = tags.join(",").replace(/\s/g, '').split(",")
+    tags.forEach(tag => {
+      if ( updateTags.indexOf(tag) === -1 ){
+        updateTags.push(tag)
+      }
+    })
+    console.log('this is tags: ',updateTags)
+    setTagsList(updateTags);
+  }
+
   const onCreateList = () => {
     let booksToList = listBooks.map(element => {
       return element.id
@@ -71,6 +87,7 @@ const App = () => {
   const getBooks = () => {
     BookManager.getBooks().then(books => {
       if (books.length) {
+        addTag(books)
         setSearchResults(books);
       }
     });
@@ -135,6 +152,9 @@ const App = () => {
       <div>
         <CreateBook
           onCreateBook={onCreateBook}/>
+        <FilterBar
+        tagsList={tagsList}
+        />
         <SearchResults
           books={currentBooks}
           onEdit={onEditBook}
