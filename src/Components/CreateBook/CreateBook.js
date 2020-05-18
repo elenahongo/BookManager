@@ -24,11 +24,11 @@ class CreateBook extends Component {
   }
 
   onTagsChange = (e) => {
-    this.setState({ description: e.target.value });
+    this.setState({ tags: e.target.value });
   }
 
   onImageChange = (e) => {
-    this.setState({ description: e.target.value });
+    this.setState({ image: e.target.value });
   }
 
   resetForm() {
@@ -98,6 +98,7 @@ class CreateBook extends Component {
               variant="contained"
               type='submit'
               color="primary"
+              onClick={this.onCreateBook}
             >
               Save
             </Button>
