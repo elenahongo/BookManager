@@ -33,9 +33,17 @@ class Book extends React.Component {
 				this.props.onDelete(this.props.book.id);
 		}
 
+    onDragStart = (ev, id) => {
+      console.log('dragstart: ', id)
+      ev.dataTransfer.setData("id", id);
+    }
+
 		render () {
 			return(
-        <Card>
+        <Card
+          onDragStart = {(e) => this.onDragStart(e, this.props.book.id)} 
+          draggable
+        >
           <CardActionArea>
             <CardMedia
               component="img"

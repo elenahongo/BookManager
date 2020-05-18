@@ -8,12 +8,27 @@ class CreateList extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
   }
 
-  handleNameChange(event) {
-    this.props.onNameChange(event.target.value);
+  onDragOver (event) {
+    event.preventDefault();
   }
+
+  handleNameChange(ev) {
+    this.props.onNameChange(ev.target.value);
+  }
+
+  onDrop= (ev, cat) => {
+    let id = ev.dataTransfer.getData('id');
+    console.log(id)
+    this.props.onAddBook(id);
+  }
+
   render() {
     return (
-      <Container>
+      <Container 
+        onDragOver={(e)=>this.onDragOver(e)} 
+        style={{ backgroundColor: '#cfe8fc', height: '100vh'}}
+        onDrop={(e)=>this.onDrop(e, 'list')}    
+      >
         <input
           value={this.props.listName}
           onChange={this.handleNameChange}

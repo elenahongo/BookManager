@@ -57,6 +57,19 @@ const App = () => {
       setCurrentPage(pageNumber)
     }
 
+  //Drag and Drop
+    const onAddBook = (id) => {
+      let updateList = listBooks.slice()
+      searchResults.map(book => {
+        if (book.id===Number(id)){
+          if(updateList){
+          updateList.push(book)    
+          }
+        }
+      })
+      setListBooks(updateList)
+    }
+
     return (
     <div>
       <h1>Book Manager</h1>
@@ -74,7 +87,8 @@ const App = () => {
           paginate={paginate}
         />
         <CreateList
-        createListBooks={listBooks}
+          createListBooks={listBooks}
+          onAddBook={onAddBook}
         />
 
           {/* <div>
