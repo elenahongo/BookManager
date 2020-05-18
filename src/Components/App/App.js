@@ -65,6 +65,9 @@ class App extends React.Component {
           onEdit={this.onEditBook}
           onDelete={this.onDeleteBook}
         />
+        <CreateList
+        createListBooks={this.state.listBooks}
+        />
 
           {/* <div>
             <FilterBar/>
