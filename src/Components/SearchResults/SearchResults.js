@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import BookList from '../BookList/BookList'
+import Container from '@material-ui/core/Container';
 
 const SearchResults = (props) => {
     return (
-      <div>
+      <Container>
           <h2>Books</h2>
           <BookList
             books={props.books}
@@ -11,7 +12,7 @@ const SearchResults = (props) => {
             onDelete={props.onDelete}
             isRemoval={true}
           />
-      </div>
+      </Container>
     )
 }
 

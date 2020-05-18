@@ -4,18 +4,18 @@ import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typog
 class Book extends React.Component {
 	constructor(props){
 			super(props);
-			this.editBook = this.editBook.bind(this);
-			this.deleteBook = this.deleteBook.bind(this);
+			this.onEditBook = this.onEditBook.bind(this);
+			this.onDeleteBook = this.onDeleteBook.bind(this);
 		}
   
     renderAction() {
 			if (this.props.isRemoval) {
 	      return (
 	        <CardActions>
-            <Button size="small" color="primary" onClick={this.onEdit}>
+            <Button size="small" color="primary" onClick={this.onEditBook}>
               Edit
             </Button>
-            <Button size="small" color="primary" onClick={this.onDelete}>
+            <Button size="small" color="primary" onClick={this.onDeleteBook}>
               Delete
             </Button>
           </CardActions>
@@ -25,12 +25,12 @@ class Book extends React.Component {
 	    }
     }
     
-		editBook(){
+		onEditBook(){
 			  this.props.onEdit(this.props.book);
 		}
 
-		deleteBook(){
-				this.props.onDelete(this.props.book);
+		onDeleteBook(){
+				this.props.onDelete(this.props.book.id);
 		}
 
 		render () {

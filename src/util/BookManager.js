@@ -64,46 +64,14 @@ BookManager.createBook = book => {
 //   });
 // };
 
-// BookManager.restoreEmployee = employee => {
-//   employee.isCurrentEmployee = 1;
-//   const url = `${baseUrl}/employees/${employee.id}`;
-//   const fetchOptions = {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({employee: employee})
-//   };
-//   return fetch(url, fetchOptions).then(response => {
-//     if (!response.ok) {
-//       return new Promise(resolve => resolve(null));
-//     }
-//     return response.json().then(jsonResponse => {
-//       return camelcaseKeys(jsonResponse.employee);
-//     });
-//   });
-// };
+BookManager.deleteBook = id => {
+  const url = `${baseUrl}/books/${id}`;
+  const fetchOptions = {
+    method: 'DELETE'
+  };
+  return fetch(url, fetchOptions);
+};
 
-// BookManager.deleteEmployee = id => {
-//   const url = `${baseUrl}/employees/${id}`;
-//   const fetchOptions = {
-//     method: 'DELETE'
-//   };
-//   return fetch(url, fetchOptions);
-// };
-
-// BookManager.getMenus = () => {
-//   const url = `${baseUrl}/menus`;
-
-//   return fetch(url).then(response => {
-//     if (!response.ok) {
-//       return new Promise(resolve => resolve([]));
-//     }
-//     return response.json().then(jsonResponse => {
-//       return jsonResponse.menus.map(menu => camelcaseKeys(menu));
-//     });
-//   });
-// };
 
 // BookManager.getMenu = id => {
 //   const url = `${baseUrl}/menus/${id}`;

@@ -14,31 +14,42 @@ class App extends React.Component {
       listName: 'New Playlist Name',
       listBooks: [],
     };
-    this.onCreateBook = this.onCreateBook.bind('this')
-    this.onEditBook = this.onEditBook.bind('this')
-    this.onDeleteBook = this.onDeleteBook.bind('this')
+    this.onCreateBook = this.onCreateBook.bind(this)
+    this.onEditBook = this.onEditBook.bind(this)
+    this.onDeleteBook = this.onDeleteBook.bind(this)
   }
 
   onCreateBook (book) {
-      BookManager.createBook(book).then(book => {
-        console.log(book)
-      });
+    BookManager.createBook(book).then(book => {
+      let updateSearch = this.state.searchResults.slice();
+      updateSearch.unshift(book)
+      this.setState({searchResults: updateSearch});
+    });
   }
 
-  onDeleteBook (book) {
-    console.log(book)
+  onDeleteBook (id) {
+    BookManager.deleteBook(id).then(()=>{
+      let updateSearch = this.state.searchResults.filter(bookResulted => {
+        return bookResulted.id !== id;
+      });
+      this.setState({searchResults: updateSearch});
+    })
   };
+
+  getBooks () {
+    BookManager.getBooks().then(books => {
+      if (books.length) {
+        this.setState({searchResults: books});
+      }
+    });
+  }
 
   onEditBook (book) {
     console.log(book)
   }
 
   componentDidMount(){
-    BookManager.getBooks().then(books => {
-      if (books.length) {
-        this.setState({searchResults: books});
-      }
-    });
+    this.getBooks()
   }
 
 

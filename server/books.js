@@ -25,7 +25,7 @@ booksRouter.param('bookId', (req, res, next, bookId) => {
 
 //GET requests
 booksRouter.get('/', (req, res, next) => {
-  db.all('SELECT * FROM books',
+  db.all('SELECT * FROM books ORDER BY books.id DESC',
     (err, books) => {
       if (err) {
         next(err);
@@ -63,7 +63,7 @@ booksRouter.post('/', (req, res, next) => {
     if (error) {
       next(error);
     } else {
-      db.get(`SELECT * FROM books WHERE book.id = ${this.lastID}`,
+      db.get(`SELECT * FROM books WHERE books.id = ${this.lastID}`,
         (error, book) => {
           res.status(201).json({book: book});
         });
@@ -95,7 +95,7 @@ booksRouter.put('/:bookId', (req, res, next) => {
     if (error) {
       next(error);
     } else {
-      db.get(`SELECT * FROM book WHERE book.id = ${req.params.bookId}`,
+      db.get(`SELECT * FROM books WHERE book.id = ${req.params.bookId}`,
         (error, book) => {
           res.status(200).json({book: book});
         });
@@ -104,17 +104,14 @@ booksRouter.put('/:bookId', (req, res, next) => {
 });
 
 booksRouter.delete('/:bookId', (req, res, next) => {
-  const sql = 'UPDATE book SET is_current_book = 0 WHERE book.id = $bookId';
-  const values = {$bookId: req.params.bookId};
+  const deleteSql = 'DELETE FROM books WHERE books.id = $bookId';
+  const deleteValues = {$bookId: req.params.bookId};
 
-  db.run(sql, values, (error) => {
+  db.run(deleteSql, deleteValues, (error) => {
     if (error) {
       next(error);
     } else {
-      db.get(`SELECT * FROM book WHERE book.id = ${req.params.bookId}`,
-        (error, book) => {
-          res.status(200).json({book: book});
-        });
+      res.sendStatus(204);
     }
   });
 });
