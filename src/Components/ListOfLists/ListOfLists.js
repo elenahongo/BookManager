@@ -1,10 +1,13 @@
 import React from 'react';
-import {Container, Box, Button} from '@material-ui/core';
+import {Container, Box, Button, Link} from '@material-ui/core';
 
 const ListOfLists = (props) => {
 
   const onDeleteList = (id) => {
     props.onDelete(id);
+  }
+  const onFilterList = (id) => {
+    props.onFilter(id);
   }
 
   return (
@@ -12,9 +15,11 @@ const ListOfLists = (props) => {
       {props.lists.map(list => {
         console.log(list)
         return <Box
-          key={list.id}
+          key={`listid${list.id}`}
           >
+          <Link href="#" onClick={onFilterList.bind(this, list.id)}>
           {list.title}
+          </Link>
           <Button 
             variant="contained"
             type='submit'

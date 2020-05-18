@@ -53,6 +53,20 @@ const App = () => {
         setlistOfLists(updateListofLists)
     })
   };
+  
+  const onFilterList = (id) => {
+    BookManager.getBooks().then(books => {
+    let filterByList = listOfLists.filter(listListed => {
+      return listListed.id === id;
+    });
+    let booksToShow = filterByList[0].books.split(',').map((value)=>{
+      return parseInt(value, 10)})
+    let updateSearch = books.filter(bookResulted => {
+      return booksToShow.find(element => element === bookResulted.id);
+    });
+    setSearchResults(updateSearch);
+    })
+  };
 
   const getBooks = () => {
     BookManager.getBooks().then(books => {
@@ -142,6 +156,7 @@ const App = () => {
         <ListOfLists
           lists={listOfLists}
           onDelete={onDeleteList}
+          onFilter={onFilterList}
         />
 
           {/* <div>
