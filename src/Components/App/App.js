@@ -58,7 +58,15 @@ const App = () => {
     }
 
   //Drag and Drop
-    const onAddBook = (id) => {
+  const onAddBook = (id) => {
+    let trackBookList = false;
+    listBooks.forEach(bookListTrack => {
+      if (bookListTrack.id === Number(id)) {
+        trackBookList = true;
+        }
+      }
+    );
+    if(!trackBookList){
       let updateList = listBooks.slice()
       searchResults.map(book => {
         if (book.id===Number(id)){
@@ -69,6 +77,7 @@ const App = () => {
       })
       setListBooks(updateList)
     }
+  }
 
     return (
     <div>
