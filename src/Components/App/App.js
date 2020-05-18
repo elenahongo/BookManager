@@ -36,7 +36,6 @@ const App = () => {
         updateTags.push(tag)
       }
     })
-    console.log('this is tags: ',updateTags)
     setTagsList(updateTags);
   }
 
@@ -81,6 +80,21 @@ const App = () => {
       return booksToShow.find(element => element === bookResulted.id);
     });
     setSearchResults(updateSearch);
+    })
+  };
+  
+  const onFilterTag = (tag) => {
+    BookManager.getBooks().then(books => {
+      if(tag===null){
+        console.log('is null')
+        setSearchResults(books)   
+      } else {
+        let filterByTag = books.filter((book) => {
+          let tagString = book.tags.replace(/\s/g, '').split(",");
+          return tagString.indexOf(tag)!==-1 
+        });
+        setSearchResults(filterByTag)
+      }
     })
   };
 
@@ -154,6 +168,7 @@ const App = () => {
           onCreateBook={onCreateBook}/>
         <FilterBar
         tagsList={tagsList}
+        onFilterTag={onFilterTag}
         />
         <SearchResults
           books={currentBooks}
