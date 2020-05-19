@@ -23,7 +23,7 @@ class CreateList extends Component {
 
   render() {
     return (
-      <Container 
+      <Container  
         onDragOver={(e)=>this.onDragOver(e)} 
         style={{ backgroundColor: '#cfe8fc', height: '100vh'}}
         onDrop={(e)=>this.onDrop(e, 'list')}    

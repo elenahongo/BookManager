@@ -4,10 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 300,
+    maxWidth: 470,
+    maxHeight: 200,
+    display: "flex"
   },
   media: {
-    height: 100,
+    width: 100,
   },
 });
 
@@ -134,22 +136,22 @@ const onDragStart = (ev, id) => {
           onDragStart = {(e) => onDragStart(e, props.book.id)} 
           draggable
         >
-          <CardActionArea>
-            <CardMedia
+          <CardMedia
               className={classes.media}
               component="img"
               alt={props.book.title}
               image={props.book.image}
               title={props.book.title}
-            />
+          />
+          <CardActionArea>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="h6" gutterBottom>
                 {props.book.title}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="textSecondary" gutterBottom>
                 {props.book.description}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="caption" color="textSecondary" gutterBottom>
                 Tags: {props.book.tags}
               </Typography>
             </CardContent>

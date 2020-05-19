@@ -6,6 +6,8 @@ import CreateList from '../CreateList/CreateList';
 import BookManager from '../../util/BookManager'
 import PaginationLinks from '../Pagination/Pagination'
 import ListOfLists from '../ListOfLists/ListOfLists'
+import {Container, Box, Typography} from '@material-ui/core'
+import { flexbox } from '@material-ui/system';
 
 const App = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -45,8 +47,11 @@ const App = () => {
     console.log(booksToList)
     BookManager.createList(listName, booksToList.join(',')).then(list => {
       let updateLists = listOfLists.slice();
-      updateLists.unshift(list.title)
+      updateLists.unshift(list)
       setlistOfLists(updateLists);
+      setListName('New List Name');
+      setListBooks([]);
+
     });
   }
 
@@ -175,48 +180,52 @@ const App = () => {
   }
 
     return (
-    <div>
-      <h1>Book Manager</h1>
-      <div>
-        <CreateBook
-          onCreateBook={onCreateBook}/>
-        <FilterBar
-        tagsList={tagsList}
-        onFilterTag={onFilterTag}
-        />
-        <SearchResults
-          books={currentBooks}
-          onEdit={onEditBook}
-          onDelete={onDeleteBook}
-        />
-        <PaginationLinks 
-          booksPerPage={booksPerPage} 
-          totalBooks={searchResults.length}
-          paginate={paginate}
-        />
-        <CreateList
-          listName={listName}
-          onNameChange={updateListName}
-          onCreateList={onCreateList}
-          createListBooks={listBooks}
-          onAddBook={onAddBook}
-          onSave={onCreateList}
-        />
+    <Container>
+    <Typography variant="h1" component="h2">
+      Book Manager
+    </Typography>
+      <Container>
+        <Container>
+          <CreateBook
+            onCreateBook={onCreateBook}/>
+          <FilterBar
+          tagsList={tagsList}
+          onFilterTag={onFilterTag}
+          />
+        </Container>
+        <div style={{ width: '100%' }}>
+          <Box display="flex" flexDirection="row" p={1} m={1} justifyContent="center">
+            <Container p={1}>
+              <SearchResults
+                books={currentBooks}
+                onEdit={onEditBook}
+                onDelete={onDeleteBook}
+              />
+              <PaginationLinks 
+                booksPerPage={booksPerPage} 
+                totalBooks={searchResults.length}
+                paginate={paginate}
+              />
+            </Container>
+            <Container p={1}>
+              <CreateList
+                listName={listName}
+                onNameChange={updateListName}
+                onCreateList={onCreateList}
+                createListBooks={listBooks}
+                onAddBook={onAddBook}
+                onSave={onCreateList}
+              />
+            </Container>
+          </Box>
+        </div>
         <ListOfLists
           lists={listOfLists}
           onDelete={onDeleteList}
           onFilter={onFilterList}
         />
-
-          {/* <div>
-            <FilterBar/>
-            <div class="App-playlist">
-              <SearchResults/>
-              <CreateList/>
-            </div>
-          </div> */}
-      </div>
-    </div>
+      </Container>
+    </Container>
     ); 
 }
 
