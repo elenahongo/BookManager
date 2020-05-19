@@ -1,8 +1,19 @@
 import React, {useState} from 'react';
 import {Input, Modal, Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 300,
+  },
+  media: {
+    height: 100,
+  },
+});
 
 const Book = (props) => {
-  
+  const classes = useStyles();
+
   const [open, setOpen] = React.useState(false);
   const [title, settitle] = useState('')
   const [tags, settags] = useState('')
@@ -33,13 +44,13 @@ const Book = (props) => {
     setimage(e.target.value)
   }
 
-  const onEditBook = (book) => {
-    props.onEdit(book, {
-      title: title ? title : book.title,
-      description: description ? description: book.description,
-      tags: tags ? tags: book.tags,
-      image: image ? image: book.image,
-    });
+const onEditBook = (book) => {
+  props.onEdit(book, {
+    title: title ? title : book.title,
+    description: description ? description: book.description,
+    tags: tags ? tags: book.tags,
+    image: image ? image: book.image,
+  });
 }
 
 const onDeleteBook = () => {
@@ -119,14 +130,15 @@ const onDragStart = (ev, id) => {
     		
 			return(
         <Card
+          className={classes.root}
           onDragStart = {(e) => onDragStart(e, props.book.id)} 
           draggable
         >
           <CardActionArea>
             <CardMedia
+              className={classes.media}
               component="img"
               alt={props.book.title}
-              height="140"
               image={props.book.image}
               title={props.book.title}
             />

@@ -1,6 +1,5 @@
 import React from 'react';
 import Pagination from '@material-ui/lab/Pagination';
-import PaginationItem from '@material-ui/lab/PaginationItem';
 
 const PaginationLinks = ({booksPerPage, totalBooks, paginate}) => {
   const pageNumbers = [];

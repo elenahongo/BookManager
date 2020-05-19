@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import CreateBook from '../CreateBook/CreateBook';
 import FilterBar from '../FilterBar/FilterBar';
 import SearchResults from '../SearchResults/SearchResults';
@@ -131,8 +130,12 @@ const App = () => {
   }
 
   useEffect(() => {
-    getBooks()
-    getLists()
+    const fetchData = () => {
+      getBooks()
+      getLists()
+    }
+    fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
     
   //Pagination logic
@@ -156,7 +159,7 @@ const App = () => {
     );
     if(!trackBookList){
       let updateList = listBooks.slice()
-      searchResults.map(book => {
+      searchResults.forEach((book) => {
         if (book.id===Number(id)){
           if(updateList){
           updateList.unshift(book)    
