@@ -1,104 +1,125 @@
-import React, { Component } from 'react';
-import {Input, Button, Container} from '@material-ui/core';
+import React, { useState } from 'react';
+import {TextField, Button, Container} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-class CreateBook extends Component {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '45ch',
+    },
+  },
+}));
 
-  constructor(props){
-    super(props);
-    this.state = {
-      showNewCardForm: false,
-      title: '',
-      description: '',
-      tags: '',
-      image: '',
-    };
+const CreateBook = (props) => {
+  const classes = useStyles();
+
+  const [showNewCardForm, setshowNewCardForm] = useState(false);
+  const [title, settitle] = useState('')
+  const [tags, settags] = useState('')
+  const [image, setimage] = useState('')
+  const [description, setdescription] = useState('')
+
+  const onTitleChange = (e) => {
+    settitle(e.target.value);
   }
 
-
-  onTitleChange = (e) => {
-    this.setState({ title: e.target.value});
+  const onDescriptionChange = (e) => {
+    setdescription(e.target.value)
   }
 
-  onDescriptionChange = (e) => {
-    this.setState({ description: e.target.value });
+  const onTagsChange = (e) => {
+    settags(e.target.value)  
   }
 
-  onTagsChange = (e) => {
-    this.setState({ tags: e.target.value });
+  const onImageChange = (e) => {
+    setimage(e.target.value)
   }
 
-  onImageChange = (e) => {
-    this.setState({ image: e.target.value });
+  const resetForm = () => {
+      setshowNewCardForm(false)
+      settitle('')
+      setdescription('')
+      settags('')
+      setimage('')
   }
 
-  resetForm() {
-    this.setState({
-      showNewCardForm: false,
-      title: '',
-      description: '',
-      tags: '',
-      image: '',
-    });
-  }
-
-  onCreateBook = (e) => {
+  const onCreateBook = (e) => {
     e.preventDefault();
-    this.props.onCreateBook({
-      title: this.state.title,
-      description: this.state.description,
-      tags: this.state.tags,
-      image: this.state.image,
+    if (title.length !== 0 && description.length !== 0 && tags.length !== 0 && image.length !== 0 ){
+    props.onCreateBook({
+      title: title,
+      description: description,
+      tags: tags,
+      image: image,
     });
-    this.resetForm()
+    resetForm()
+  } else {
+    return
+  }
   }
 
-  toggleForm = () => {
-    this.setState({ showNewCardForm: !this.state.showNewCardForm});
+  const toggleForm = () => {
+    setshowNewCardForm(!showNewCardForm)
   }
 
-  render() {
     return (
      <Container>
         <div className='task-list-header'>
           <Button 
             variant="contained"
             color="primary"
-            onClick={this.toggleForm}
+            onClick={toggleForm}
           >
             + New book
           </Button>
         </div>
-        {this.state.showNewCardForm && (
-          <form noValidate autoComplete="off" onSubmit={this.onCreateTask}>
-            <Input
-              onChange={this.onTitleChange}
-              value={this.state.title}
-              type='text'
-              placeholder='Title'
-            />
-            <Input
-              onChange={this.onDescriptionChange}
-              value={this.state.description}
-              type='text'
-              placeholder='Description'
-            />
-            <Input
-              onChange={this.onTagsChange}
-              value={this.state.tags}
-              type='text'
-              placeholder='Tags'
-            />
-            <Input
-              onChange={this.onImageChange}
-              value={this.state.image}
-              type='text'
-              placeholder='Image'
-            />
+        {showNewCardForm && (
+          <form className={classes.root} noValidate autoComplete="off" onSubmit={onCreateBook}>
+             <div> 
+              <TextField
+                helperText="Required."
+                error ={title.length !== 0 ? false : true}
+                onChange={onTitleChange}
+                value={title}
+                type='text'
+                placeholder='Title'
+              />
+              <TextField
+                helperText="Required."
+                error ={description.length !== 0 ? false : true}
+                id="standard-multiline-static"
+                multiline
+                rowsMax={4} 
+                onChange={onDescriptionChange}
+                value={description}
+                type='text'
+                placeholder='Description'
+              />
+            </div>
+            <div>
+              <TextField
+                helperText="Required."
+                error ={tags.length !== 0 ? false : true}
+                onChange={onTagsChange}
+                value={tags}
+                type='text'
+                placeholder='Insert Tags separated by commas'
+              />
+              <TextField
+                helperText="Required."
+                error ={image.length !== 0 ? false : true}
+                onChange={onImageChange}
+                value={image}
+                type='text'
+                placeholder='Image URL'
+              />
+            </div>
             <Button
               variant="contained"
               type='submit'
               color="primary"
-              onClick={this.onCreateBook}
+              onClick={onCreateBook}
             >
               Save
             </Button>
@@ -106,8 +127,6 @@ class CreateBook extends Component {
         )}
       </Container>
     );
-  }
-
 }
 
 export default CreateBook

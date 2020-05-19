@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BookList from '../BookList/BookList'
-import {Container, Button} from '@material-ui/core';
+import {Container, Box, Button, TextField} from '@material-ui/core';
 
 class CreateList extends Component {
   constructor(props) {
@@ -23,13 +23,13 @@ class CreateList extends Component {
 
   render() {
     return (
-      <Container  
+      <Box  
         onDragOver={(e)=>this.onDragOver(e)} 
         style={{ backgroundColor: '#cfe8fc', height: '100vh'}}
         onDrop={(e)=>this.onDrop(e, 'list')}    
       >
-        <input
-          value={this.props.listName}
+        <TextField
+          placeholder={this.props.listName}
           onChange={this.handleNameChange}
         />
         <BookList
@@ -43,7 +43,7 @@ class CreateList extends Component {
         >
         SAVE LIST
         </Button>
-      </Container>
+      </Box>
     );
   }
 }

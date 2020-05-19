@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Input, Modal, Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography} from '@material-ui/core';
+import {Input, TextField, Modal, Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
   root: {
     maxWidth: 470,
     maxHeight: 200,
@@ -11,7 +11,13 @@ const useStyles = makeStyles({
   media: {
     width: 100,
   },
-});
+  formRoot: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 const Book = (props) => {
   const classes = useStyles();
@@ -65,44 +71,57 @@ const onDragStart = (ev, id) => {
 }
 
   const body = (
-    <form noValidate autoComplete="off" >
-            <Input
-              onChange={onTitleChange}
-              defaultValue={props.book.title}
-              type='text'
-            />
-            <Input
-              onChange={onDescriptionChange}
-              defaultValue={props.book.description}
-              type='text'
-            />
-            <Input
-              onChange={onTagsChange}
-              defaultValue={props.book.tags}
-              type='text'
-            />
-            <Input
-              onChange={onImageChange}
-              defaultValue={props.book.image}
-              type='text'
-            />
-            <Button
-              variant="contained"
-              type='submit'
-              color="primary"
-              onClick={onEditBook.bind(this, props.book)}
-            >
-              Save
-            </Button>
-            <Button
-              variant="contained"
-              type='button'
-              color="primary"
-              onClick={handleClose}
-            >
-              Close
-            </Button>
-          </form>
+    <form className={classes.formRoot} noValidate autoComplete="off" >
+      <div>
+        <TextField
+          label="Title"
+          onChange={onTitleChange}
+          defaultValue={props.book.title}
+          type='text'
+        />
+        <TextField
+          label="Description"
+          id="standard-multiline-static"
+          multiline
+          rowsMax={4}
+          onChange={onDescriptionChange}
+          defaultValue={props.book.description}
+          type='text'
+        />
+      </div>
+      <div>
+        <TextField
+          label="Tags"
+          onChange={onTagsChange}
+          defaultValue={props.book.tags}
+          type='text'
+        />
+        <TextField
+          label="Image"
+          onChange={onImageChange}
+          defaultValue={props.book.image}
+          type='text'
+        />
+      </div>
+      <div>
+        <Button
+          variant="contained"
+          type='submit'
+          color="primary"
+          onClick={onEditBook.bind(this, props.book)}
+        >
+          Save
+        </Button>
+        <Button
+          variant="contained"
+          type='button'
+          color="primary"
+          onClick={handleClose}
+        >
+          Close
+        </Button>
+      </div>
+    </form>
   )
 
     const renderAction = () => {
@@ -145,7 +164,7 @@ const onDragStart = (ev, id) => {
           />
           <CardActionArea>
             <CardContent>
-              <Typography gutterBottom variant="h6" gutterBottom>
+              <Typography variant="h6" gutterBottom>
                 {props.book.title}
               </Typography>
               <Typography variant="body2" color="textSecondary" gutterBottom>
