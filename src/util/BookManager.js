@@ -77,24 +77,24 @@ BookManager.createList = (title, books) => {
   });
 };
 
-// BookManager.updateEmployee = employee => {
-//   const url = `${baseUrl}/employees/${employee.id}`;
-//   const fetchOptions = {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({employee: employee})
-//   };
-//   return fetch(url, fetchOptions).then(response => {
-//     if (!response.ok) {
-//       return new Promise(resolve => resolve(null));
-//     }
-//     return response.json().then(jsonResponse => {
-//       return camelcaseKeys(jsonResponse.employee);
-//     });
-//   });
-// };
+BookManager.updateBook = book => {
+  const url = `${baseUrl}/books/${book.id}`;
+  const fetchOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({book: book})
+  };
+  return fetch(url, fetchOptions).then(response => {
+    if (!response.ok) {
+      return new Promise(resolve => resolve(null));
+    }
+    return response.json().then(jsonResponse => {
+      return jsonResponse.book;
+    });
+  });
+};
 
 BookManager.deleteBook = id => {
   const url = `${baseUrl}/books/${id}`;

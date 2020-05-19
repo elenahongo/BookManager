@@ -115,8 +115,19 @@ const App = () => {
     });
   }
 
-  const onEditBook = (book) => {
-    console.log(book)
+  const onEditBook = (book, newBook) => {
+    BookManager.updateBook({...book, ...newBook}).then((book)=>{
+      console.log(book)
+      let updateSearch = searchResults.slice()
+      console.log(updateSearch)
+      for (let x in updateSearch){
+        console.log(updateSearch[x])
+        if (updateSearch[x].id === book.id){
+          updateSearch[x] = book
+        }
+      }
+      setSearchResults(updateSearch);
+    })
   }
 
   useEffect(() => {
