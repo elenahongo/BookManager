@@ -70,8 +70,7 @@ Google Chrome Version 81.0.4044.138 (Official Build) (64-bit)
   
 ### What was the most difficult to accomplish? please share your experience.
 
-  I didn't have enough time to accomplish which I would. Errorhandler and proper feedback during loadings or confirmation messages are missing.
-  A complete test suit was also out of scope.
+  Besides the filter and edit functionality were tough, I didn't have enough time to accomplish which I would like. Errorhandler and proper feedback during loadings or confirmation messages are missing. A complete test suit was also out of scope and it was difficult to test every feature.
 
 ### How much time did you spend building this test?
 
