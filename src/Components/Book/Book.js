@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {Input, TextField, Modal, Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography} from '@material-ui/core';
+import {TextField, Modal, Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme)=>({
   root: {
     maxWidth: 470,
     maxHeight: 200,
-    display: "flex"
+    display: "flex",
+    marginBottom: 10,
   },
   media: {
     width: 100,
@@ -17,11 +18,23 @@ const useStyles = makeStyles((theme)=>({
       width: '25ch',
     },
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
 
 const Book = (props) => {
   const classes = useStyles();
-
   const [open, setOpen] = React.useState(false);
   const [title, settitle] = useState('')
   const [tags, settags] = useState('')
@@ -71,6 +84,7 @@ const onDragStart = (ev, id) => {
 }
 
   const body = (
+    <div className={classes.paper}>
     <form className={classes.formRoot} noValidate autoComplete="off" >
       <div>
         <TextField
@@ -122,6 +136,7 @@ const onDragStart = (ev, id) => {
         </Button>
       </div>
     </form>
+    </div>
   )
 
     const renderAction = () => {
@@ -132,6 +147,7 @@ const onDragStart = (ev, id) => {
               Edit
             </Button>
             <Modal
+              className={classes.modal}
               open={open}
               onClose={handleClose}
               aria-labelledby="simple-modal-title"
